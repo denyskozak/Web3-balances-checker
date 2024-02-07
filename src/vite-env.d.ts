@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly INFURA_ID: string
+    readonly VITE_INFURA_ID: string
 }
 
 interface ImportMeta {

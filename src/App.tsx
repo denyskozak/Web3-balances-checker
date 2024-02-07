@@ -1,4 +1,4 @@
-import {Web3ContextWrapper} from './contexts/web3.context';
+import {Web3ContextWrapper} from './contexts';
 import {MainPage} from './pages';
 
 function App() {

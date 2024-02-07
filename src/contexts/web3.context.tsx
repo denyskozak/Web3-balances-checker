@@ -1,27 +1,16 @@
-import {useState, useContext, createContext} from 'react';
+import {useState, useContext, createContext, DispatchWithoutAction, Dispatch} from 'react';
 import * as PropsType from 'prop-types';
-import {createAccountsStore} from '../stores/accounts';
+import {addAddressAction, createAccountsStore, IAccounts, IAccountsAction} from '../stores/accounts';
 
 interface IWeb3Context {
-    network: string;
+    accounts: IAccounts;
+    dispatch: Dispatch<IAccountsAction>
 }
 
 export const Web3Context = createContext<IWeb3Context>({
-    network: ''
+    accounts: {},
+    dispatch: () => {}
 });
-
-// Hook
-export const useWeb3 = () => {
-    const context = useContext(Web3Context);
-
-    if (!context) {
-        throw new Error('useWeb3 must be used within a Web3Context.Provider')
-    }
-
-    const {network} = context;
-
-    return [network];
-};
 
 // Component
 const Web3Component = (props) => {
@@ -32,9 +21,18 @@ const Web3Component = (props) => {
     const [network, setNetwork] = useState('ETH');
     const [accounts, dispatch] = createAccountsStore();
 
+    const dispatchWithPromise = (actionResult: IAccountsAction | Promise<IAccountsAction>) => {
+        if (actionResult instanceof Promise<IAccountsAction>) {
+            actionResult.then(dispatch).catch(() => console.error('Action promise rejected'));
+            return;
+        }
+        dispatch(actionResult);
+    };
+
     return (
         <Web3Context.Provider value={{
-            network,
+            accounts,
+            dispatch: dispatchWithPromise
         }}>
             {children}
         </Web3Context.Provider>

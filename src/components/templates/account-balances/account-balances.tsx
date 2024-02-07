@@ -1,12 +1,23 @@
 
 interface IAccountBalancesProps {
-    network: string;
+    address: string;
+    onAddressChange: (value: string) => void;
+    onAddressSubmit: () => void;
 }
 
 const AccountBalancesComponent = (props: IAccountBalancesProps) => {
+    const {
+        address,
+        onAddressChange,
+        onAddressSubmit,
+        balances
+    } = props;
+
     return (
         <div>
-            {props.network}
+            <input value={address} onChange={event => onAddressChange(event.target.value)} />
+            <button onClick={onAddressSubmit}>Check address</button>
+            {JSON.stringify(balances)}
         </div>
     );
 }
