@@ -1,14 +1,16 @@
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {Web3Context} from '../contexts';
-import {addAddressAction, IAccounts} from '../stores/accounts';
+import {addAddressAction, deleteAddressAction, IAccounts} from '../stores/accounts';
 
 interface IWeb3Hook {
     accounts: IAccounts,
-    addAddress: (value: string) => void;
+    addAddress: (value: string) => Promise<void>;
+    deleteAddress: (value: string) => void;
 }
 
-export const useWeb3 = () => {
+export const useWeb3 = (): IWeb3Hook  => {
     const context = useContext(Web3Context);
+    const [network, setNetwork] = useState('ETH');
 
     if (!context) {
         throw new Error('useWeb3 must be used within a Web3Context.Provider')
@@ -17,9 +19,13 @@ export const useWeb3 = () => {
     const {accounts, dispatch} = context;
 
     const addAddress = async (value: string) => {
-        dispatch(addAddressAction(value))
+        dispatch(await addAddressAction(value))
+    };
+
+    const deleteAddress = (value: string) => {
+        dispatch(deleteAddressAction(value))
     };
 
 
-    return [accounts, addAddress];
+    return {accounts, addAddress, deleteAddress};
 };

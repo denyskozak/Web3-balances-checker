@@ -9,7 +9,8 @@ interface IWeb3Context {
 
 export const Web3Context = createContext<IWeb3Context>({
     accounts: {},
-    dispatch: () => {}
+    dispatch: () => {
+    }
 });
 
 // Component
@@ -18,21 +19,12 @@ const Web3Component = (props) => {
         children,
     } = props;
 
-    const [network, setNetwork] = useState('ETH');
     const [accounts, dispatch] = createAccountsStore();
-
-    const dispatchWithPromise = (actionResult: IAccountsAction | Promise<IAccountsAction>) => {
-        if (actionResult instanceof Promise<IAccountsAction>) {
-            actionResult.then(dispatch).catch(() => console.error('Action promise rejected'));
-            return;
-        }
-        dispatch(actionResult);
-    };
 
     return (
         <Web3Context.Provider value={{
             accounts,
-            dispatch: dispatchWithPromise
+            dispatch
         }}>
             {children}
         </Web3Context.Provider>
