@@ -1,5 +1,4 @@
 import {createContext, Dispatch, ReducerState, useEffect, useReducer} from 'react';
-import * as PropsType from 'prop-types';
 import {Accounts, accountsReducer, IAccounts, IAccountsAction} from '../stores/accounts';
 import {getItemLocalStore, setItemLocalStore} from '../utilities/persistInStore';
 import {accountsLocalStoreName} from '../consts';
@@ -15,14 +14,12 @@ export const Web3Context = createContext<IWeb3Context>({
     }
 });
 
-// Component
-const Web3Component = (props) => {
+export const Web3ContextWrapper = (props) => {
     const {
         children,
     } = props;
 
     const initializer = initValue => (getItemLocalStore(accountsLocalStoreName) as Accounts) || initValue;
-
     const [accounts, dispatch] = useReducer(accountsReducer as ReducerState<Accounts>, {}, initializer);
 
     useEffect(
@@ -41,9 +38,3 @@ const Web3Component = (props) => {
         </Web3Context.Provider>
     );
 };
-
-Web3Component.propTypes = {
-    children: PropsType.object.isRequired,
-};
-
-export const Web3ContextWrapper = Web3Component;
