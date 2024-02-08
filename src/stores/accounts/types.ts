@@ -5,21 +5,23 @@ export type Balances = Record<Coins, number>;
 export type Accounts = Record<string, Balances>;
 
 // Actions payloads
-export interface DeleteAccountPayload {
+export interface IDeleteAccountPayload {
     address: string,
 }
 
-export interface AddAccountPayload {
+export interface IAddAccountPayload {
     address: string,
     balances: Balances
 }
 
-export interface UpdateAccountPayload {
+export interface IUpdateAccountPayload {
     accounts: Accounts
 }
 
+export type AccountsPayload = IAddAccountPayload | IDeleteAccountPayload | IUpdateAccountPayload;
+
 // Action
-export interface IAccountsAction<T extends AddAccountPayload | DeleteAccountPayload | UpdateAccountPayload> {
+export interface IAccountsAction<T extends AccountsPayload> {
     type: ActionsTypes;
     payload: T;
 }

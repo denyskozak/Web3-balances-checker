@@ -57,6 +57,7 @@ export const updateBalancesAction = async (accounts: Accounts, networkName: Web3
 
     const entries = Object.entries(accounts);
 
+    //  "balances" var used for fix TS error
     const accountsRequests = entries.map(
         ([address, balances]) => coinContracts
             .map(mapGetContractProvider)

@@ -1,4 +1,11 @@
-import {Accounts, AddAccountPayload, DeleteAccountPayload, IAccountsAction, UpdateAccountPayload} from './types';
+import {
+    Accounts,
+    AccountsPayload,
+    AddAccountPayload,
+    DeleteAccountPayload,
+    IAccountsAction,
+    UpdateAccountPayload
+} from './types';
 import {ADD_ACCOUNT, DELETE_ACCOUNT, UPDATE_ACCOUNTS} from './actions.types';
 
 const handlers = {
@@ -21,6 +28,6 @@ const handlers = {
     },
 
 }
-export const accountsReducer = (state: Accounts, action: IAccountsAction<unknown>) => {
+export const accountsReducer = (state: Accounts, action: IAccountsAction<AccountsPayload>) => {
     return handlers[action.type] ? handlers[action.type](state, action) : {...state};
 };
