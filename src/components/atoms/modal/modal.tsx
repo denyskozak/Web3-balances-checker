@@ -1,17 +1,19 @@
 import {ReactNode} from 'react';
-import {Modal as MaterialModal} from '@mui/material';
+import {Box, IconButton, Modal as MaterialModal, Typography} from '@mui/material';
 import {ModalContainer} from './modal.styles';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface IModalProps {
     open: boolean,
     onClose: () => {},
     children: ReactNode,
+    title?: string;
     ariaLabelledby?: string;
     ariaDescribedby?: string;
 }
 
 export const Modal = (props: IModalProps) => {
-    const { open, onClose, children, ariaLabelledby, ariaDescribedby} = props;
+    const {open, onClose, title, children, ariaLabelledby, ariaDescribedby} = props;
 
     return (
         <MaterialModal
@@ -21,6 +23,16 @@ export const Modal = (props: IModalProps) => {
             aria-describedby={ariaDescribedby}
         >
             <ModalContainer>
+                <Box display="flex" justifyContent="center" paddingBottom={2}>
+                    {title && (
+                        <Typography gutterBottom variant="h5">
+                            {title}
+                        </Typography>
+                    )}
+                    <IconButton sx={{marginLeft: 'auto'}} onClick={onClose}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Box>
                 {children}
             </ModalContainer>
         </MaterialModal>

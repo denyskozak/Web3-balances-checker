@@ -1,6 +1,6 @@
-import {useState, useContext, createContext, DispatchWithoutAction, Dispatch} from 'react';
+import {createContext, Dispatch} from 'react';
 import * as PropsType from 'prop-types';
-import {addAddressAction, createAccountsStore, IAccounts, IAccountsAction} from '../stores/accounts';
+import {createAccountsStore, IAccounts, IAccountsAction} from '../stores/accounts';
 
 interface IWeb3Context {
     accounts: IAccounts;

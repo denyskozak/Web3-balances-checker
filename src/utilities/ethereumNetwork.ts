@@ -22,12 +22,14 @@ const getContractProvider = (contact: string) => new ethers.Contract(contact, er
 const getContactBalance = (address: string, contact: ContractInterface) => (
     contact.balanceOf(address)
 );
-const formatUnitsBalance = (coinName: Coins, value: number) => ethers.formatUnits(value, coinDecimal[coinName]);
+const formatUnitsBalance = (coinName: Coins, value: number) => Number(ethers.formatUnits(value, coinDecimal[coinName])).toFixed(2);
+const isAddressValid = (address: string) => ethers.isAddress(address);
 
 export const EthereumNetwork: IWe3NetworkBasic = {
     provider,
     getContractProvider,
     getContactBalance,
     formatUnitsBalance,
+    isAddressValid,
     coinContracts
 };
