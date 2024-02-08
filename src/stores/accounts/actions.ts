@@ -75,7 +75,7 @@ export const updateBalancesAction = async (accounts: Accounts, networkName: Web3
     return {
         type: UPDATE_ACCOUNTS,
         payload: {
-            accounts:  Object.fromEntries(newAccountsEntries),
+            accounts: Object.fromEntries(newAccountsEntries),
         }
     };
 };

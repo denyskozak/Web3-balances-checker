@@ -1,5 +1,6 @@
-import {ethers} from 'ethers';
+import {ethers, AbstractProvider, Contract, ContractTransactionResponse} from 'ethers';
 import {ContractInterface} from 'ethers/src.ts/contract/types';
+
 import {Coins, ICoinContact} from '../stores/accounts';
 import {erc20Abi} from '../abi';
 import {getInfraProviderURL} from './getInfraProviderURL';
@@ -25,7 +26,7 @@ const getContactBalance = (address: string, contact: ContractInterface) => (
 const formatUnitsBalance = (coinName: Coins, value: number) => Number(ethers.formatUnits(value, coinDecimal[coinName])).toFixed(2);
 const isAddressValid = (address: string) => ethers.isAddress(address);
 
-export const EthereumNetwork: IWe3NetworkBasic = {
+export const EthereumNetwork: IWe3NetworkBasic<AbstractProvider, Contract, ContractTransactionResponse> = {
     provider,
     getContractProvider,
     getContactBalance,
