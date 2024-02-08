@@ -5,7 +5,7 @@ import {ModalContainer} from './modal.styles';
 
 interface IModalProps {
     open: boolean,
-    onClose: () => {},
+    onClose: () => void,
     children: ReactNode,
     title?: string;
     ariaLabelledby?: string;

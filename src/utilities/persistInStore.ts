@@ -7,5 +7,5 @@ const setValueToStore = <T>(key: string, value = T, setItem: (key: string, value
         JSON.stringify(value)
     );
 
-export const getItemLocalStore = <T>(key: string): T | null => getValueFromStore(key, localStorage.getItem.bind(localStorage));
-export const setItemLocalStore = <T>(key: string, value = T) => setValueToStore(key, value, localStorage.setItem.bind(localStorage));
+export const getItemLocalStore = <T>(key: string): T | null => getValueFromStore<T>(key, localStorage.getItem.bind(localStorage));
+export const setItemLocalStore = <T>(key: string, value = T) => setValueToStore<T>(key, value, localStorage.setItem.bind(localStorage));

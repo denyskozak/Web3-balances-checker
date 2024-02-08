@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert, Box, Typography} from '@mui/material';
 import {Button, Table} from '../../';
 import {Accounts as IAccounts} from '../../../stores/accounts';
@@ -42,7 +42,16 @@ export const Accounts = (props: IAccountsProps) => {
 
         return '';
     };
-    const renderDeleteButton = address => <Button size="small" onClick={() => handleDelete(address)}>Delete</Button>;
+
+    const handleDelete = useCallback((address: string) => {
+        const result = window.confirm(`Are you sure, with to delete: ${address}`);
+        if (result) onDeleteAddress(address);
+    }, [onDeleteAddress]);
+
+    const renderDeleteButton = useCallback(
+        address => <Button size="small" onClick={() => handleDelete(address)}>Delete</Button>,
+        [handleDelete]
+    );
 
     const list = useMemo(() =>
             Object.entries(accounts as IAccounts)
@@ -52,7 +61,7 @@ export const Accounts = (props: IAccountsProps) => {
                         actions: renderDeleteButton(address),
                         ...balances
                     })),
-        [accounts]);
+        [accounts, renderDeleteButton]);
 
     // Refresh balances every 20 sec
     useEffect(() => {
@@ -70,7 +79,7 @@ export const Accounts = (props: IAccountsProps) => {
 
         timerId = startRefreshTimeout();
         return () => timerId ? clearTimeout(timerId) : null;
-    }, [accounts]);
+    }, [accounts, onAccountsUpdate]);
 
     useEffect(() => {
         if (hasBeenUpdated) setTimeout(() => setHasBeenUpdated(!hasBeenUpdated), 4 * 1000);
@@ -80,17 +89,12 @@ export const Accounts = (props: IAccountsProps) => {
         if (error) setTimeout(() => setError(''), 4 * 1000);
     }, [error]);
 
-    const handleDelete = (address: string) => {
-        const result = window.confirm(`Are you sure, with to delete: ${address}`);
-        if (result) onDeleteAddress(address);
-    };
-
     return (
         <Container>
             {/*Add button*/}
             <Button onClick={() => setModalState(true)}>Observe new Ethereum address</Button>
             {/*Table*/}
-            {list.length > 0  && (<Box>
+            {list.length > 0 && (<Box>
                 <Table headCells={headCells} bodyCells={list}/>
                 <Typography gutterBottom variant="subtitle2">
                     This table refreshing each 10 sec

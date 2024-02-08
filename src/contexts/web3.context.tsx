@@ -1,8 +1,10 @@
-import {createContext, Dispatch} from 'react';
+import {createContext, Dispatch, ReducerState, useEffect, useReducer} from 'react';
 import * as PropsType from 'prop-types';
-import {createAccountsStore, IAccounts, IAccountsAction} from '../stores/accounts';
+import {Accounts, accountsReducer, IAccounts, IAccountsAction} from '../stores/accounts';
+import {getItemLocalStore, setItemLocalStore} from '../utilities/persistInStore';
+import {accountsLocalStoreName} from '../consts';
 
-interface IWeb3Context {
+export interface IWeb3Context {
     accounts: IAccounts;
     dispatch: Dispatch<IAccountsAction>
 }
@@ -19,7 +21,16 @@ const Web3Component = (props) => {
         children,
     } = props;
 
-    const [accounts, dispatch] = createAccountsStore();
+    const initializer = initValue => (getItemLocalStore(accountsLocalStoreName) as Accounts) || initValue;
+
+    const [accounts, dispatch] = useReducer(accountsReducer as ReducerState<Accounts>, {}, initializer);
+
+    useEffect(
+        () => {
+            setItemLocalStore(accountsLocalStoreName, accounts);
+        },
+        [accounts]
+    );
 
     return (
         <Web3Context.Provider value={{

@@ -9,7 +9,7 @@ const handlers = {
     },
     [DELETE_ACCOUNT]: (state: Accounts, action: IAccountsAction<DeleteAccountPayload>) => {
         const { address } = action.payload;
-        if (!state.hasOwnProperty(address)) return {...state};
+        if (!state[address]) return {...state};
 
         const newState = {...state};
         delete newState[address];
@@ -21,6 +21,6 @@ const handlers = {
     },
 
 }
-export const reducer = (state: Accounts, action: IAccountsAction<unknown>) => {
-    return handlers.hasOwnProperty(action.type) ? handlers[action.type](state, action) : {...state};
+export const accountsReducer = (state: Accounts, action: IAccountsAction<unknown>) => {
+    return handlers[action.type] ? handlers[action.type](state, action) : {...state};
 };

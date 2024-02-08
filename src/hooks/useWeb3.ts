@@ -1,18 +1,24 @@
-import {useContext, useState} from 'react';
-import {Web3Context} from '../contexts';
-import {Accounts, addAddressAction, deleteAddressAction, IAccounts, updateBalancesAction} from '../stores/accounts';
+import { useContext, useState} from 'react';
+import {IWeb3Context, Web3Context} from '../contexts';
+import {
+    Accounts,
+    addAddressAction,
+    deleteAddressAction,
+    IAccounts,
+    updateBalancesAction
+} from '../stores/accounts';
 import {Web3NetworksType} from '../types';
 
 interface IWeb3Hook {
-    network: string,
-    accounts: IAccounts,
+    network: string;
+    accounts: IAccounts;
     addAddress: (value: string) => Promise<void>;
     deleteAddress: (value: string) => void;
     updateAccounts: (accounts: Accounts) => Promise<void>;
 }
 
-export const useWeb3 = (): IWeb3Hook  => {
-    const context = useContext(Web3Context);
+export const useWeb3 = () => {
+    const context = useContext<IWeb3Context>(Web3Context);
     // Could be used for change network, in future
     const [network,] = useState<Web3NetworksType>('ethereum');
 
@@ -34,5 +40,5 @@ export const useWeb3 = (): IWeb3Hook  => {
         dispatch(await updateBalancesAction(list, network))
     };
 
-    return {accounts, addAddress, deleteAddress, updateAccounts, network};
+    return <IWeb3Hook>{accounts, addAddress, deleteAddress, updateAccounts, network};
 };

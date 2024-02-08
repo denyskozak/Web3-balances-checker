@@ -7,7 +7,7 @@ import {Web3Networks} from '../consts';
 const MainComponent = () => {
     const {accounts, addAddress, deleteAddress, updateAccounts, network} = useWeb3();
 
-    const handleUpdateAccounts = useCallback((list) => updateAccounts(list), []);
+    const handleUpdateAccounts = useCallback((list) => updateAccounts(list), [updateAccounts]);
 
     return (
         <Container>

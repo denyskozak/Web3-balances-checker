@@ -20,9 +20,7 @@ export const AddressForm = (props: IAccountFormProps) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (value === '') {
-            setError('');
-        }
+        setError('');
     }, [value]);
 
     const {
