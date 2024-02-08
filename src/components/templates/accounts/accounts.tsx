@@ -1,10 +1,11 @@
 import {useEffect, useMemo, useState} from 'react';
+import {Alert, Box, Typography} from '@mui/material';
 import {Button, Table} from '../../';
 import {Accounts as IAccounts} from '../../../stores/accounts';
 import {AddressForm} from '../';
 import {Modal} from '../../atoms';
 import {Accounts as AccountType} from '../../../types';
-import {Alert, Box} from '@mui/material';
+import {Container} from './accounts.styles';
 
 interface IAccountsProps {
     accounts: IAccounts,
@@ -69,7 +70,7 @@ export const Accounts = (props: IAccountsProps) => {
 
         timerId = startRefreshTimeout();
         return () => timerId ? clearTimeout(timerId) : null;
-    }, [accounts])
+    }, [accounts]);
 
     useEffect(() => {
         if (hasBeenUpdated) setTimeout(() => setHasBeenUpdated(!hasBeenUpdated), 4 * 1000);
@@ -84,13 +85,17 @@ export const Accounts = (props: IAccountsProps) => {
         if (result) onDeleteAddress(address);
     };
 
-
     return (
-        <Box display="flex" flexDirection="column" gap={4} justifyContent="center" alignItems="center">
+        <Container>
             {/*Add button*/}
             <Button onClick={() => setModalState(true)}>Observe new Ethereum address</Button>
             {/*Table*/}
-            {list.length > 0 ? <Table headCells={headCells} bodyCells={list}/> : null}
+            {list.length > 0  && (<Box>
+                <Table headCells={headCells} bodyCells={list}/>
+                <Typography gutterBottom variant="subtitle2">
+                    This table refreshing each 10 sec
+                </Typography>
+            </Box>)}
             {hasBeenUpdated && (<Alert severity="success">Balances has been updated</Alert>)}
             {error && (<Alert severity="error">{error}</Alert>)}
 
@@ -106,7 +111,7 @@ export const Accounts = (props: IAccountsProps) => {
                     onSubmit={onAddAddress}
                 />
             </Modal>
-        </Box>
+        </Container>
     );
 }
 

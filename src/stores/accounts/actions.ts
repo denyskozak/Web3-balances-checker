@@ -20,8 +20,6 @@ const getMappersByNetwork = (web3Network: IWe3NetworkBasic) => ({
 });
 
 export const addAddressAction = async (address: string, networkName: Web3NetworksType) => {
-    console.log('networkName: ', networkName); 
-    console.log('Web3Networks: ', Web3Networks); 
     const network = Web3Networks[networkName];
     const { coinContracts } = network;
 
@@ -44,7 +42,7 @@ export const addAddressAction = async (address: string, networkName: Web3Network
             address,
             balances: Object.fromEntries(formatBalances)
         }
-    }
+    };
 };
 
 export const updateBalancesAction = async (accounts: Accounts, networkName: Web3NetworksType) => {
@@ -58,7 +56,6 @@ export const updateBalancesAction = async (accounts: Accounts, networkName: Web3
     } = getMappersByNetwork(network);
 
     const entries = Object.entries(accounts);
-    const mapWithAddressIds = (balance, index) => [entries[index][0], Object.fromEntries(balance)];
 
     const accountsRequests = entries.map(
         ([address, balances]) => coinContracts
@@ -70,6 +67,8 @@ export const updateBalancesAction = async (accounts: Accounts, networkName: Web3
     const balances = await Promise.all(balancesRequest);
 
     const formatBalances = balances.map(item => item.map(mapFormatUnitsBalance));
+
+    const mapWithAddressIds = (balance, index) => [entries[index][0], Object.fromEntries(balance)];
     const newAccountsEntries  = formatBalances.map(mapWithAddressIds);
 
     return {
@@ -77,7 +76,7 @@ export const updateBalancesAction = async (accounts: Accounts, networkName: Web3
         payload: {
             accounts:  Object.fromEntries(newAccountsEntries),
         }
-    }
+    };
 };
 
 export const deleteAddressAction = (address: string) => ({

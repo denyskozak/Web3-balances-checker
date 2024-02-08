@@ -19,6 +19,12 @@ export const AddressForm = (props: IAccountFormProps) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        if (value === '') {
+            setError('');
+        }
+    }, [value]);
+
     const {
         onSubmit,
         onValidate,

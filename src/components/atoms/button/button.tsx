@@ -1,14 +1,15 @@
 import {ReactNode} from 'react';
 import {Button as MaterialButton} from '@mui/material';
+import {ButtonProps} from '@mui/material/Button/Button';
 
 interface IButtonProps {
     children: ReactNode;
     onClick: () => void;
     className?: string;
     disabled?: boolean;
-    size?: 'small' | 'medium';
-    variant?: 'contained' | 'outlined';
-    type?: 'button' | 'submit';
+    size?: ButtonProps['size'];
+    variant?: ButtonProps['variant'];
+    type?: ButtonProps['type'];
 }
 
 export const Button = (props: IButtonProps) => {

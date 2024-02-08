@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 import {Box, IconButton, Modal as MaterialModal, Typography} from '@mui/material';
-import {ModalContainer} from './modal.styles';
 import CloseIcon from '@mui/icons-material/Close';
+import {ModalContainer} from './modal.styles';
 
 interface IModalProps {
     open: boolean,

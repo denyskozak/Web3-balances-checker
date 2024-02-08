@@ -1,11 +1,11 @@
 import {useWeb3} from '../hooks';
 import {Accounts} from '../components';
 import {Container} from './main.styles';
-import {EthereumNetwork} from '../utilities/ethereumNetwork';
 import {useCallback} from 'react';
+import {Web3Networks} from '../consts';
 
 const MainComponent = () => {
-    const {accounts, addAddress, deleteAddress, updateAccounts} = useWeb3();
+    const {accounts, addAddress, deleteAddress, updateAccounts, network} = useWeb3();
 
     const handleUpdateAccounts = useCallback((list) => updateAccounts(list), []);
 
@@ -16,7 +16,7 @@ const MainComponent = () => {
                 onAddAddress={addAddress}
                 onDeleteAddress={deleteAddress}
                 onAccountsUpdate={handleUpdateAccounts}
-                isAddressValid={EthereumNetwork.isAddressValid}
+                isAddressValid={Web3Networks[network].isAddressValid}
             />
         </Container>
     );
