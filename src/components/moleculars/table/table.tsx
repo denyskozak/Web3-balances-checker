@@ -11,7 +11,7 @@ export const Table = <T extends {id: string}>(props: ITableProps<T>) => {
 
     return (
         <TableContainer component={Paper}>
-            <MaterialTable sx={{minWidth: 650}} aria-label="simple table">
+            <MaterialTable>
                 <TableHead>
                     <TableRow>
                         {headCells.map((cell, index) => <TableCell key={`${cell.title}-${cell.key}`}
