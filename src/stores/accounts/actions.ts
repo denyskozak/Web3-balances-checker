@@ -1,8 +1,7 @@
 import {ADD_ACCOUNT, DELETE_ACCOUNT, UPDATE_ACCOUNTS} from './actions.types';
 
 import {Accounts, Coins} from './types';
-import {IWe3NetworkBasic, Web3NetworksType} from '../../types';
-import {Web3Networks} from '../../consts';
+import {IWe3NetworkBasic} from '../../types';
 
 const getMappersByNetwork = (web3Network: IWe3NetworkBasic) => ({
     mapGetContractProvider: ([coin, contact]) => ([
@@ -19,8 +18,7 @@ const getMappersByNetwork = (web3Network: IWe3NetworkBasic) => ({
     ])
 });
 
-export const addAddressAction = async (address: string, networkName: Web3NetworksType) => {
-    const network = Web3Networks[networkName];
+export const addAddressAction = async (address: string, network: IWe3NetworkBasic) => {
     const { coinContracts } = network;
 
     const {
@@ -45,8 +43,7 @@ export const addAddressAction = async (address: string, networkName: Web3Network
     };
 };
 
-export const updateBalancesAction = async (accounts: Accounts, networkName: Web3NetworksType) => {
-    const network = Web3Networks[networkName];
+export const updateBalancesAction = async (accounts: Accounts, network: IWe3NetworkBasic) => {
     const { coinContracts } = network;
 
     const {
