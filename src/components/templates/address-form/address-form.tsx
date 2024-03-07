@@ -1,6 +1,6 @@
 import {Alert, CircularProgress, TextField,} from '@mui/material';
 import {Form} from './address-form.styles';
-import {Button} from '../../atoms';
+import {Button} from '../../';
 import {useEffect, useState} from 'react';
 
 interface IAccountFormProps {

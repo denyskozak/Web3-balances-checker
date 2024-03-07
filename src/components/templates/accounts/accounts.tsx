@@ -3,7 +3,7 @@ import {Alert, Box, Typography} from '@mui/material';
 import {Button, Table} from '../../';
 import {Accounts as IAccounts} from '../../../stores/accounts';
 import {AddressForm} from '../';
-import {Modal} from '../../atoms';
+import {Modal} from '../../';
 import {Accounts as AccountType} from '../../../types';
 import {Container} from './accounts.styles';
 
